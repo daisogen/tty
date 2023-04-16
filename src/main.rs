@@ -11,6 +11,7 @@ static ECHO: AtomicBool = AtomicBool::new(true);
 
 fn main() {
     input::init();
+    //std::daisogen::pd_set("tty_readline", readline as u64);
 
     loop {
         // This assumes there's a keyboard, which is usual but incorrect
@@ -39,6 +40,12 @@ fn main() {
                     io::stdout().flush().unwrap();
                 }
             }
+            "Return" => {
+                input::enter();
+                if ECHO.load(Relaxed) {
+                    println!();
+                }
+            }
             _ => {
                 if c == 0 {
                     // It's not a known character, too bad!
@@ -56,3 +63,7 @@ fn main() {
         }
     }
 }
+
+/*extern "C" fn readline() -> usize {
+    // TODO serialize string here
+}*/
